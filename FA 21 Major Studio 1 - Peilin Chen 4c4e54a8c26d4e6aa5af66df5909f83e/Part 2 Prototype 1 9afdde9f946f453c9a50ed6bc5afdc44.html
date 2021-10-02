@@ -1,0 +1,638 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Part 2 Prototype 1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9afdde9f-946f-453c-9a50-ed6bc5afdc44" class="page sans"><header><h1 class="page-title">Part 2 Prototype 1</h1></header><div class="page-body"><blockquote id="dcc94454-f67b-4acc-84ab-12c3b976ba6c" class="block-color-purple">Peilin Chen and Franco Chen</blockquote><h1 id="122b2293-847a-45c9-bfaf-f25478124511" class="block-color-yellow">Memory Refresh</h1><p id="d1f41260-2e12-47a4-a345-fddbc80d59a6" class="">We picked Grand Army Plaza as our research and project site, which located at the intersection of Flatbush Ave, Plaza St W, and Vanderbilt Ave</p><div id="a375de48-55b7-4db8-af78-bc76d168f9b6" class="column-list"><div id="808c08a3-a9e3-4638-9b98-f7e5e57d038d" style="width:50%" class="column"><figure id="b8fbeefd-287f-43ba-b640-4f2482e2160b" class="image"><a href="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/002.jpeg"><img style="width:1920px" src="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/002.jpeg"/></a></figure></div><div id="5d2a5cca-49d3-4863-86c5-ec8b8c59ca80" style="width:50%" class="column"><figure id="d08750f2-6b01-469c-a6a3-8f157589d8dc" class="image"><a href="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/003.jpeg"><img style="width:1920px" src="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/003.jpeg"/></a></figure></div></div><p id="4d70c8de-a3c6-401f-9658-0326f0e9f887" class="">We also decided to create an inflatable interactable object for this site based on our research and observation from previous.</p><h1 id="95b133b4-fde2-4607-9c68-66cbd25e7c41" class="block-color-yellow">Inflatable Sketches</h1><p id="1514d843-be9c-4e07-a039-907b660c4707" class="">Following are the three sketches of three types of inflatables, each requiring a different number of users to activate. Our original scope is to create several different size inflatables to let pedestrians interact with them step-by-step. </p><figure id="0786b424-316f-4575-904b-741d86ce2a72" class="image"><a href="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/proto2.jpg"><img style="width:480px" src="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/proto2.jpg"/></a></figure><h1 id="ccd4bbcd-0f44-4122-ab35-a34a83e39259" class="block-color-yellow">Inflatable Prototype</h1><div id="bd136ff7-1410-4551-b13e-1a36fcc5e762" class="column-list"><div id="8e5e7c8c-e16f-4007-9228-63faf364ebe8" style="width:50%" class="column"><p id="81586fc2-d66c-459a-b2d1-73dfcf4be48a" class="">The initial prototype was built indoors to determine methodology and to forsee any potential flaws with upscaling the design.</p><p id="438b9f4c-55c3-44e0-9516-7d431f6ba7d3" class="">Here are the materials we used to build the mini-prototype</p><ul id="f6bb874d-89c9-4ced-ad98-a9541b7f465c" class="bulleted-list"><li style="list-style-type:disc">Painter&#x27;s plastic</li></ul><ul id="bde0588a-9ba7-4bbc-9b7b-a083dc0f9ea0" class="bulleted-list"><li style="list-style-type:disc">Painter&#x27;s tape</li></ul></div><div id="7c011005-97f1-4d63-b307-e3bcbc51d29f" style="width:50%" class="column"><figure id="6145bb87-f8c0-4dc3-a9b6-a7d0c37043b5" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_15.29.44.png"><img style="width:394px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_15.29.44.png"/></a></figure></div></div><hr id="5041a60f-f0dd-4bf9-8233-d23a56550500"/><div id="aa88da54-d933-4b5e-98dd-26c4d27952e5" class="column-list"><div id="d107cd90-c2ba-487f-88c1-72349af770a3" style="width:50%" class="column"><p id="417716c9-4e51-4a39-a774-eb89a39ca0e0" class="">Our initial test determined the top of the inflatable to be the heaviest portion. If the air flow device can inflate it past this point, then the object will be inflatable. In this case, the air pump was not able to fully inflate the arch.</p><p id="895bd23d-7371-486a-a496-1fe8c2c8fa2c" class="">Here are the alternative inflation methods we tried out:</p><ul id="d99eac23-28b4-4937-a021-e502fa6f9eaa" class="bulleted-list"><li style="list-style-type:disc">bike pump (not able to inflate)</li></ul><ul id="4267300d-ba7d-4ac6-a2ee-a91810931f96" class="bulleted-list"><li style="list-style-type:disc">hair dryer (45 seconds)</li></ul></div><div id="7e117028-cde2-48ea-8d35-3acba052cc1c" style="width:50.000000000000014%" class="column"><p id="17834901-6f5e-4710-a71a-f98243befda7" class="">
+</p><figure id="d2106404-e4db-4005-a787-bd6ce4f14dc3" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_15.29.49.png"><img style="width:403px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_15.29.49.png"/></a></figure></div></div><p id="cad87574-c6c4-485b-a25a-9ba6fb99335b" class="">This mini-version prototype is 3 * 3 inch, and this is how it looks like when it gets inflated.  </p><div id="908a7a75-4904-432e-8b14-0ce721a93bb9" class="column-list"><div id="4170246c-dd82-44c0-b08c-b6db40f37d55" style="width:37.5%" class="column"><figure id="fd8ed0c5-71a4-471b-99a0-cd12902bd833" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_008.jpeg"><img style="width:192px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_008.jpeg"/></a><figcaption>2.1 Fully Inflated Side Picture 1</figcaption></figure></div><div id="0bc1c7b1-aa21-435f-9582-32f93e64ec14" style="width:62.5%" class="column"><figure id="7429f54f-7c56-42d9-aa9d-a1fee16a1b0e" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_006.jpeg"><img style="width:4032px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_006.jpeg"/></a><figcaption>2.2 Fully Inflated Side Picture 2</figcaption></figure></div></div><p id="5b42f367-20a0-4788-9aad-620afc1deeb2" class="">Following are the two tryouts we did for our first prototype. This video got speed up, so it is not representing the actual time to inflate the object. </p><div id="4fc21505-262b-48d0-bab4-40c313e8aa24" class="column-list"><div id="df191925-ea10-433c-aee0-88dd23d7f5d3" style="width:50%" class="column"><figure id="ef9a35e8-81ce-4dc7-b9cb-d931e25a6170"><div class="source"><a href="https://youtu.be/3mnSqLfScxs">https://youtu.be/3mnSqLfScxs</a></div><figcaption>2.3 Biker Pump Inflate Process</figcaption></figure></div><div id="99b06455-828d-4666-97c5-84d2a00972e3" style="width:50%" class="column"><figure id="dea81740-7371-479e-b96f-7322da469d97"><div class="source"><a href="https://youtu.be/JT_SQcYjk0Q">https://youtu.be/JT_SQcYjk0Q</a></div><figcaption>2.4 Hair Dryer Inflate Process</figcaption></figure></div></div><h1 id="10d4a823-2c35-41d0-88b1-b3bb1bf46405" class="block-color-yellow">Air Pump Sketches and Prototype</h1><div id="846b2f5f-408a-4d36-bfc9-2041d13b2549" class="column-list"><div id="17c17177-ae97-44a6-a072-516a615a546f" style="width:43.75%" class="column"><p id="49dd2278-3861-424d-8fe8-f1a7db2edf9f" class="">Having done some initial testing on plastic bags before the prototypes, we anticipated needing stronger pumps.</p><ul id="347ebcb4-a694-47c2-90d3-02d2f262e297" class="bulleted-list"><li style="list-style-type:disc">piston pump</li></ul><ul id="1ebcb995-54f5-46ff-85fb-ddb54373cdc2" class="bulleted-list"><li style="list-style-type:disc">bellow</li></ul><ul id="63e16adb-4750-45e5-9b0c-178622d4e18d" class="bulleted-list"><li style="list-style-type:disc">electric pump</li></ul></div><div id="f17a0ff0-154a-4518-b6de-4c58dfcf8b9e" style="width:56.25%" class="column"><figure id="29fa7885-1795-46a1-bc9d-60d004483524" class="image"><a href="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/proto1.jpg"><img style="width:3564px" src="Part%201%20+%20Part%201%205%20Research,%20Observe,%20Document%203db670edae7642639aebe75008255880/proto1.jpg"/></a><figcaption>1.7 Types of Air Flow Tools</figcaption></figure></div></div><p id="abe8ed86-0be5-49b5-97c5-1e8042aa02f9" class="">We also DIY a bellow, created to understand air output compared to a bike pump. This proof of concept didn&#x27;t hold up structurally, but from its performance, we decided to purchase a bellow, which was able to completely inflate the arch. However, the amount of effort needed to inflate the object was problematic.</p><figure id="2a1fa93f-252e-4c87-832d-e29742b3e702" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.00.59.png"><img style="width:432px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.00.59.png"/></a></figure><h1 id="5498229e-fd13-4bfa-aef3-098868f1c3b5" class="block-color-yellow">On-Site Testing</h1><h3 id="077ad444-e77b-478e-8ada-ff1ecf67b54a" class="block-color-purple">On-Site Preparation</h3><p id="cb4f936c-fdb3-4946-b1ed-54d38de691d1" class="">We prepared some nails, wire, bellow, and tapes to secured the mini-arch on the ground. During the preparation phase, we used bellow to inflate the arch all the way up. It takes us about 10 mins to fill all the way up. In this case, we decided to do the demonstration, and tested out the mini button that we made for the interaction portion.  </p><div id="dc9c1403-7b39-46d9-8c54-a5985d147fd5" class="column-list"><div id="762c3eb7-8e50-44c5-a488-3aa78ae7b4ed" style="width:50%" class="column"><figure id="15d4aede-a9ab-4cc7-bcf5-6caa5c9065a5" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_008-2.jpeg"><img style="width:672px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_008-2.jpeg"/></a></figure></div><div id="835f9d3b-7dae-44fb-93fd-02137f827a1c" style="width:50%" class="column"><figure id="7d1ff38d-b92f-4e4e-99d9-147e6e866635" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.08.49.png"><img style="width:564px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.08.49.png"/></a></figure></div></div><p id="c367d175-1f2e-407d-ab8c-cb6386142bcc" class="">
+</p><figure id="de5bf86f-9d3c-4e3a-9387-8b35417bac43"><div class="source"><a href="https://youtu.be/gskSemTFoLc">https://youtu.be/gskSemTFoLc</a></div><figcaption>2.5 Inflate the arch with bellow during the preparation phase. </figcaption></figure><h3 id="18901859-9075-41bc-89ad-a0392cd4fa71" class="block-color-purple">On-Site Reaction</h3><div id="b34db33f-fe0e-48de-9780-5c023eab437f" class="column-list"><div id="fd3cb1dc-4cef-460e-b7f6-7b3cfa3fc1af" style="width:50%" class="column"><figure id="e8460c55-d794-4076-8917-d1df45fcb76a" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_007.jpeg"><img style="width:4032px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_007.jpeg"/></a></figure></div><div id="78dcb988-6326-4d15-90fe-bb0275f930d5" style="width:50%" class="column"><figure id="701acfbb-5ad0-4cbd-8027-93994dff3b63" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_011.jpeg"><img style="width:4032px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/File_011.jpeg"/></a></figure></div></div><h1 id="000c3d8a-0e15-4f3d-a22d-d5e27ba860ca" class="block-color-yellow">Reflection</h1><h3 id="c512b8c9-6d17-41b7-90b0-0e765d15ab81" class="block-color-purple">Insights from On-Site Testing</h3><div id="36d8e50f-b46c-4e9e-a537-02cd4d60cb3e" class="column-list"><div id="daf6b6c7-d0f8-47fe-a957-dfba653b4c24" style="width:43.75%" class="column"><p id="00b11281-1752-40a6-8cff-f45431be5aa0" class="block-color-teal"><strong>Success:</strong></p></div><div id="e6bbf178-9c76-4aca-bf28-be60b50413e7" style="width:56.25%" class="column"><p id="c2f738b0-9755-4c46-9d2d-f5ccc1acf4d0" class="block-color-red"><strong>Failure:</strong></p></div></div><div id="387ba489-23e3-4c0c-8f31-a3093c3f3d4f" class="column-list"><div id="69a4b714-18ee-4189-9d25-ba0e0700108d" style="width:43.75%" class="column"><ul id="6029ee67-53c8-419c-a583-debf49e7e4c6" class="bulleted-list"><li style="list-style-type:disc">The arch shaped &amp; size are impressive</li></ul><ul id="190ef8c3-b25a-41d3-a74b-3198898fc2d4" class="bulleted-list"><li style="list-style-type:disc">The bellow works well</li></ul><ul id="717f591e-8efd-4754-ac47-452233f1bb7f" class="bulleted-list"><li style="list-style-type:disc">Blends with the natural environment</li></ul><ul id="6c9ed22d-a49c-4e46-a552-2fcddb2c62b1" class="bulleted-list"><li style="list-style-type:disc">Attractive for pedestrians, especially young children</li></ul></div><div id="7efc96f3-c827-430e-a082-641b7b959efd" style="width:56.25%" class="column"><ul id="64dcde1a-50d1-4966-8bef-7b9a91a2251b" class="bulleted-list"><li style="list-style-type:disc">Target standing spot doesn&#x27;t capture people&#x27;s attention</li></ul><ul id="00238251-3f34-45a1-9361-0f131c4da3c4" class="bulleted-list"><li style="list-style-type:disc">The interactive experience is not fully developed</li></ul><ul id="a47869f2-63c6-488f-a917-69a0e898f43b" class="bulleted-list"><li style="list-style-type:disc">No visual cues for any forms of interaction</li></ul><ul id="5c35ee1d-a859-4213-bdf0-d4d53d30e0e8" class="bulleted-list"><li style="list-style-type:disc">Inflation times are slowThe inflatable </li></ul><ul id="7d339a09-9465-4c9c-8ac0-2a661c0ce84d" class="bulleted-list"><li style="list-style-type:disc">object is relatively too small for this giant area</li></ul></div></div><h3 id="098a6ae4-20f3-4526-92ff-b64262ad2a9d" class="block-color-purple">Future Improvements</h3><p id="685d6059-268f-47c3-8764-ce5b8d8530dd" class="">Our testing and learnings have informed the following improvements to future mockups, and the final product.</p><ul id="8b5ba6d0-5d26-4d6c-803b-bc7dcd19f102" class="bulleted-list"><li style="list-style-type:disc">Single inflatable arch at 10 ft tall</li></ul><ul id="34a16714-d15a-4509-ab12-a85f969d0fda" class="bulleted-list"><li style="list-style-type:disc">Utilize electric air pumps to speed up the inflation process</li></ul><ul id="32f7ee03-3314-4c1a-b01c-567a13f8518f" class="bulleted-list"><li style="list-style-type:disc">Implement larger floor buttons with feet icon</li></ul><ul id="0344d264-ef69-49b3-b7b6-6398646cc1d4" class="bulleted-list"><li style="list-style-type:disc">May implement some other features -Cute stickers for decorating</li></ul><div id="ced48171-73de-4349-a3e8-61aaa4b4490c" class="column-list"><div id="cae8dccf-895e-4086-bdae-c15fc0850ef3" style="width:37.5%" class="column"><figure id="9b4d07db-aea4-4307-b405-c5505af3520b" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.16.33.png"><img style="width:370px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.16.33.png"/></a><figcaption>2.6 Iteration Sketch 1</figcaption></figure></div><div id="4c3dda9f-22f6-47f3-9b78-fdfc84db0246" style="width:62.5%" class="column"><figure id="45ae7dc9-d5e4-4b05-9404-851612bc8bd6" class="image"><a href="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.18.09.png"><img style="width:451px" src="Part%202%20Prototype%201%209afdde9f946f453c9a50ed6bc5afdc44/Screen_Shot_2021-10-02_at_16.18.09.png"/></a><figcaption>2.7 Iteration Sketch 2</figcaption></figure></div></div><h3 id="5fe1f58e-0cdc-48cd-b11b-aad621b1cbda" class="block-color-purple">Remaining Challenges</h3><ul id="d5560ea4-f009-4aad-8e9b-1ab25b720f27" class="bulleted-list"><li style="list-style-type:disc">Having users engage with the buttons</li></ul><ul id="8f7ba4f7-ad40-42f5-a2f8-dc47a7a5a643" class="bulleted-list"><li style="list-style-type:disc">Understanding wind and how the structure will stand</li></ul><ul id="4b7a4190-d238-49a4-af99-d3a401d46608" class="bulleted-list"><li style="list-style-type:disc">Overload on electric pumps</li></ul><ul id="6b721540-cad9-4b6a-96bd-cf70aff5607b" class="bulleted-list"><li style="list-style-type:disc">Slow inflation</li></ul><ul id="61e6bbbc-c3eb-49ed-b085-f2cb3a751f76" class="bulleted-list"><li style="list-style-type:disc">RAIN</li></ul></div></article></body></html>
